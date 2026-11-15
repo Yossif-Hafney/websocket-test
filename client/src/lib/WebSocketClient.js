@@ -115,10 +115,7 @@ export class WebSocketClient {
       if (this.shouldReconnect) this._scheduleReconnect();
     };
 
-    this.ws.onerror = () => {
-      // onclose fires right after — reconnect logic lives there only
-      this.ws?.close();
-    };
+
   }
 
   _scheduleReconnect() {

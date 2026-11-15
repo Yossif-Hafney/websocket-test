@@ -17,8 +17,12 @@ export function useWebSocket(url) {
   useEffect(() => {
     const client = clientRef.current;
     const unsubscribe = client.onStatusChange(setStatus);
-    client.connect();
+    let cancelled = false;
+    queueMicrotask(() => {
+      if (!cancelled) client.connect();
+    });
     return () => {
+      cancelled = true;
       unsubscribe();
       client.disconnect();
     };
